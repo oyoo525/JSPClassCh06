@@ -76,25 +76,65 @@
 <link href="../bootstrap/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-	<h2>${title }</h2>
-	<table>
-		<tr>
-			<td>no</td>
-			<td>제목</td>
-			<td>작성자</td>
-			<td>작성일</td>
-			<td>조회수</td>
-		</tr>
-		<c:forEach var="b" items="<%= bList %>">
-			<tr>
-				<td>${b.no }</td>
-				<td>${b.title }</td>
-				<td>${b.writer }</td>
-				<td>${b.regDate }</td>
-				<td>${b.readCount }</td>
-			</tr>
-		</c:forEach>
-	</table>
-	<script src="../bootstrap/bootstrap.bundle.min.js"></script>
+	<div class="container">
+		<div class="row"><!-- Header -->
+			<div class="col">Header</div>
+		</div>
+		<div class="row text-center my-5"><!-- Content -->
+			<div class="col">
+				<h2 class="fw-bold fs-3">${title }</h2>
+			</div>
+		</div>
+		<form name="serchForm" id="serchForm" action="#" class="row my-3 justify-content-center">
+			<div class="col-auto">
+				<select name="type" class="form-select">
+					<option value="title">제목</option>
+					<option value="writer">작성자</option>
+					<option value="content">내용</option>
+				</select>
+			</div>
+			<div class="col-4">
+			<input type="text" name="keyword" class="form-control">
+			</div>
+			<div class="col-auto">
+			<input type="submit" value="검색" class="btn btn-primary">
+			</div>
+		</form>
+		<div class="row">
+			<div class="col text-end">
+				<a href="writeForm" class="btn btn-outline-success">글쓰기</a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<table class="table table-hover">
+					<thead class="table-dark ">
+						<tr class="text-center">
+							<td>no</td>
+							<td>제목</td>
+							<td>작성자</td>
+							<td>작성일</td>
+							<td>조회수</td>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="b" items="<%= bList %>">
+							<tr>
+								<td class="text-secondary text-center">${b.no }</td>
+								<td><a href="boardDetail.jsp?no=${b.no }" class="link-secondary text-decoration-none">${b.title }</a></td>
+								<td class="text-secondary text-center">${b.writer }</td>
+								<td class="text-secondary text-center">${b.regDate }</td>
+								<td class="text-secondary text-center">${b.readCount }</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row"><!-- Footer -->
+			<div class="col">Footer</div>
+		</div>
+		<script src="../bootstrap/bootstrap.bundle.min.js"></script>
+	</div>
 </body>
 </html>

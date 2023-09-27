@@ -35,6 +35,48 @@ public class BoardDao {
 		}
 	}
 
+	// 테이블에서 게시글 하나 읽어오기
+	public Board getBoard(int no) {
+		
+		String sqlBoard = "SELECT * FROM jspbbs WHERE no = ?";
+		
+		Board b = null;
+		
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(sqlBoard);
+			pstmt.setInt(1, no); // 첫번째 ? 의 값을 no로 설정
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				b = new Board();
+				b.setNo(rs.getInt("no"));
+				b.setTitle(rs.getString("title"));
+				b.setWriter(rs.getString("writer"));
+				b.setContent(rs.getString("content"));
+				b.setRegDate(rs.getTimestamp("reg_date"));
+				b.setReadCount(rs.getInt("read_count"));
+				b.setPass(rs.getString("pass"));
+				b.setFile1(rs.getString("file1"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		} finally {
+			try {
+				if(rs != null) rs.close();
+				if(pstmt != null) pstmt.close();
+				if(conn != null) conn.close();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return b;
+	}
+	
+	
 	// 게시글 리스트를 읽어오는 메소드
 	public ArrayList<Board> boardList() {
 		String select = "SELECT * FROM jspbbs ORDER BY no DESC";
