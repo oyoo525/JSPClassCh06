@@ -1,3 +1,4 @@
+<!-- 게시글 상세보기 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="com.jspstudy.ch06.dao.*, com.jspstudy.ch06.vo.*" %>
@@ -24,68 +25,79 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link href="../bootstrap/bootstrap.min.css" rel="stylesheet">
+<script src="../js/jquery-3.3.1.min.js"></script>
+<script src="../js/formcheck.js"></script> 
 </head>
 <body>
 	<div class="container">
-		<div class="row"><!-- Header -->
-			<div class="col">Header</div>
-		</div>
-		<div class="row text-center my-5"><!-- Content -->
+		<!-- Header -->
+		<%@ include file="../pages/header.jsp" %>
+		
+		<!-- Content -->
+		<div class="row my-5" id="global-content">
 			<div class="col">
-				<h2 class="fw-bold fs-3">게시 글 상세보기</h2>
+				<form name="checkForm" id="checkForm">
+					<input type="hidden" name="no" value="${b.no }">
+					<input type="hidden" name="pass" id="rPass">
+				</form>
+				<div class="row">
+					<div class="col text-center">
+						<h2 class="fw-bold fs-3">게시 글 상세보기</h2>
+					</div>
+				</div>
+				<div class="row my-3">
+					<div class="col">
+						<table class="table table-bordered">
+							<tbody>
+								<tr>
+									<th class="table-secondary">제 목</th>
+									<td colspan="3">${b.title }</td>
+								</tr>
+								<tr>
+									<th class="table-secondary">글쓴이</th>
+									<td>${b.writer }</td>
+									<th class="table-secondary">작성일</th>
+									<td>${b.regDate }</td>
+								</tr>
+								<tr>
+									<th class="table-secondary">비밀번호</th>
+									<td>
+										<input type="password" name="pass" id="pass" class="form-control">
+									</td>
+									<th class="table-secondary">조회수</th>
+									<td>${b.readCount }</td>
+								</tr>
+								<tr>
+									<th class="table-secondary">파 일</th>
+									<td colspan="3">
+										<c:if test="${empty b.file1 }">
+											첨부파일없음
+										</c:if>
+										<c:if test="${not empty b.file1 }">
+											<a href="../upload/${b.file1 }">파일 다운로드</a>
+										</c:if>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="4"><pre>${b.content }</pre></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col text-center">
+						<input type="button" value="수정하기" id="detailUpdate" class="btn btn-warning">&nbsp;&nbsp;
+						<input type="button" value="삭제하기" id="detailDelete" class="btn btn-danger">&nbsp;&nbsp;
+						<input type="button" value="목록보기" class="btn btn-primary" 
+							onclick="location.href='boardList.jsp'">
+					</div>
+				</div>
 			</div>
 		</div>
-		<div class="row my-3">
-			<div class="col">
-				<table class="table table-bordered">
-					<tbody>
-						<tr>
-							<th class="table-secondary">제 목</th>
-							<td colspan="3">${b.title }</td>
-						</tr>
-						<tr>
-							<th class="table-secondary">글쓴이</th>
-							<td>${b.writer }</td>
-							<th class="table-secondary">작성일</th>
-							<td>${b.regDate }</td>
-						</tr>
-						<tr>
-							<th class="table-secondary">비밀번호</th>
-							<td>
-								<input type="password" name="pass" id="pass" class="form-control">
-							</td>
-							<th class="table-secondary">조회수</th>
-							<td>${b.readCount }</td>
-						</tr>
-						<tr>
-							<th class="table-secondary">파 일</th>
-							<td colspan="3">
-								<c:if test="${empty b.file1 }">
-									첨부파일없음
-								</c:if>
-								<c:if test="${not empty b.file1 }">
-									<a href="../upload/${b.file1 }">파일 다운로드</a>
-								</c:if>
-							</td>
-						</tr>
-						<tr>
-							<td colspan="4"><pre>${b.content }</pre></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col text-center">
-				<input type="button" value="수정하기" id="detailUpdate" class="btn btn-warning">&nbsp;&nbsp;
-				<input type="button" value="삭제하기" id="detailDelete" class="btn btn-danger">&nbsp;&nbsp;
-				<input type="button" value="목록보기" class="btn btn-primary" 
-					onclick="location.href='boardList.jsp'">
-			</div>
-		</div>
-		<div class="row"><!-- Footer -->
-			<div class="col">Footer</div>
-		</div>
+		<!-- Footer -->
+		<%@ include file="../pages/footer.jsp" %>
+		
 		<script src="../bootstrap/bootstrap.bundle.min.js"></script>
 	</div>
 </body>

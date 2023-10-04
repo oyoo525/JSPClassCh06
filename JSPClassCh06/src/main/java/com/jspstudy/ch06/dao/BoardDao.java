@@ -125,4 +125,101 @@ public class BoardDao {
 	
 		return bList;
 	}
+	
+	// 게시글 하나의 정보를 DB테이블에 저장하는 메소드
+	public void insertBoard(Board b) {
+		
+		String insertBoard = "INSERT INTO jspbbs(no, title, writer, content, reg_date, read_count, pass, file1) "
+										+ "VALUES(jspbbs_seq.NEXTVAL, ?, ?, ?, SYSDATE, ?, ?, ?)";
+		
+		try {
+			conn = ds.getConnection();
+			
+			pstmt = conn.prepareStatement(insertBoard);
+			pstmt.setString(1, b.getTitle()); // 첫번째 ? 의 값을 title로 설정
+			pstmt.setString(2, b.getWriter());
+			pstmt.setString(3, b.getContent());
+			pstmt.setInt(4, b.getReadCount());
+			pstmt.setString(5, b.getPass());
+			pstmt.setString(6, b.getFile1());
+			
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		} finally {
+			try {
+				if(pstmt != null) pstmt.close();
+				if(conn != null) conn.close();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	
+	// 게시글 수정, 삭제 시 비밀번호가 맞는지 확인
+	public boolean isPassCheck(int no, String pass) {
+		
+		String sqlBoard = "SELECT pass FROM jspbbs WHERE no = ?";
+		boolean isPass = false;
+		
+		try {
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(sqlBoard);
+			pstmt.setInt(1, no); // 첫번째 ? 의 값을 no로 설정
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				isPass = rs.getString("pass").equals(pass);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		} finally {
+			try {
+				if(rs != null) rs.close();
+				if(pstmt != null) pstmt.close();
+				if(conn != null) conn.close();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return isPass;
+	}
+	
+	
+	// DB에서 기존게시글의 내용을 수정하는 메소드
+		public void updateBoard(Board b) {
+			
+			String updateBoard = "UPDATE jspbbs SET title=?, writer=?, content=? WHERE no=?";
+			
+			try {
+				conn = ds.getConnection();
+				
+				pstmt = conn.prepareStatement(updateBoard);
+				pstmt.setString(1, b.getTitle()); // 첫번째 ? 의 값을 title로 설정
+				pstmt.setString(2, b.getWriter());
+				pstmt.setString(3, b.getContent());
+				pstmt.setInt(4, b.getNo());
+				
+				pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+				
+			} finally {
+				try {
+					if(pstmt != null) pstmt.close();
+					if(conn != null) conn.close();
+					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 }

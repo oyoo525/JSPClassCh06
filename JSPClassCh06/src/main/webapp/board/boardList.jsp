@@ -1,3 +1,4 @@
+<!-- 게시글 리스트 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -77,10 +78,11 @@
 </head>
 <body>
 	<div class="container">
-		<div class="row"><!-- Header -->
-			<div class="col">Header</div>
-		</div>
-		<div class="row text-center my-5"><!-- Content -->
+		<!-- Header -->
+		<%@ include file="../pages/header.jsp" %>
+
+		<!-- Content -->
+		<div class="row text-center my-5">
 			<div class="col">
 				<h2 class="fw-bold fs-3">${title }</h2>
 			</div>
@@ -102,7 +104,7 @@
 		</form>
 		<div class="row">
 			<div class="col text-end">
-				<a href="writeForm" class="btn btn-outline-success">글쓰기</a>
+				<a href="writeForm.jsp" class="btn btn-outline-success">글쓰기</a>
 			</div>
 		</div>
 		<div class="row">
@@ -131,9 +133,9 @@
 				</table>
 			</div>
 		</div>
-		<div class="row"><!-- Footer -->
-			<div class="col">Footer</div>
-		</div>
+		
+		<!-- Footer -->
+		<%@ include file="../pages/footer.jsp" %>
 		<script src="../bootstrap/bootstrap.bundle.min.js"></script>
 	</div>
 </body>
